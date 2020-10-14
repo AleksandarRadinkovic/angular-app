@@ -1,13 +1,49 @@
 <div class="container mt-5">
     <div *ngIf ="tasks?.length > 0; else noTasks" >
         <ul class="list-group" >
-            <li *ngFor = "let task of tasks" class="list-group-item"> <strong> {{task.title}}: </strong> {{task.description}}</li>
+            <li *ngFor = "let task of tasks" class="list-group-item">
+                <div class="row">
+                    <div class="col">
+                        <strong> {{task.title}}: </strong> {{task.description}}
+                    </div>
+                    <div class="col-sm-auto">
+                        <button (click)="editTask($event, task)" class="btn btn-link"> Edit </button>
+                    </div>
+                    <div class="col-sm-auto">
+                        <button (click)="deleteTask($event, task)" class="btn btn-link"> Delete </button>
+                    </div>
+                </div>
+                <div *ngIf="editState && taskToEdit.id == task.id">
+                    <form (ngSubmit)="udpateTask(task)">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Task title</label>
+                                    <input type="text" [(ngModel)]="task.title" name="title" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Task Description</label>
+                                    <input type="text" [(ngModel)]="task.description" name="description" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <input type="submit" class="btn btn-dark" value="Update Task">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+            </li>
         </ul>
     
     </div>
     
     <ng-template #noTasks>
-        <h5>There are no items to list</h5>
+        <h5>There are no tasks to list</h5>
     </ng-template>   
 
 </div>

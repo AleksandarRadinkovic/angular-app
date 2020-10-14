@@ -15,12 +15,13 @@ export class TaskService {
 
   tasks: Observable<Task[]>;
 
+  taskDoc: AngularFirestoreDocument<Task>;
+
   tasksCollection: AngularFirestoreCollection<Task>;
   constructor(public afs: AngularFirestore) { 
 
     this.tasksCollection = afs.collection<Task>('tasks');
 
-    // this.tasks = this.afs.collection('tasks').valueChanges();
 
     this.tasks = this.tasksCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
@@ -35,5 +36,13 @@ export class TaskService {
   }
   addTask(task: Task){
     this.tasksCollection.add(task);
+  }
+  deleteTask(task: Task){
+    this.taskDoc = this.afs.doc(`tasks/${task.id}`);
+    this.taskDoc.delete();
+  }
+  updateTask(task: Task){
+    this.taskDoc = this.afs.doc(`tasks/${task.id}`);
+    this.taskDoc.update(task);
   }
 }

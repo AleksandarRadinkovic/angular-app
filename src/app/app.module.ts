@@ -13,13 +13,15 @@ import { TasksComponent } from './components/tasks/tasks.component';
 import { TaskService } from './services/task.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AddTaskComponent } from './components/add-task/add-task.component';
-import { from } from 'rxjs';
+import { CommonModule } from '@angular/common';  
+
 
 @NgModule({
   declarations: [
     AppComponent,
     TasksComponent,
-    AddTaskComponent
+    AddTaskComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -28,6 +30,8 @@ import { from } from 'rxjs';
     AngularFireModule.initializeApp(environment.firebase, 'angular-app'),
     AngularFirestoreModule,
     NgbModule,
+    CommonModule
+    
   ],
   providers: [TaskService],
   bootstrap: [AppComponent]
