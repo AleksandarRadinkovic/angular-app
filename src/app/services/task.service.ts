@@ -18,11 +18,9 @@ export class TaskService {
   taskDoc: AngularFirestoreDocument<Task>;
 
   tasksCollection: AngularFirestoreCollection<Task>;
+
   constructor(public afs: AngularFirestore) { 
-
     this.tasksCollection = afs.collection<Task>('tasks');
-
-
     this.tasks = this.tasksCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Task;
@@ -31,6 +29,7 @@ export class TaskService {
       }))
     );
   }
+  
   getTasks(){
     return this.tasks;
   }
